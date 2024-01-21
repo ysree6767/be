@@ -1,7 +1,7 @@
 const User = require('../models/user.model')
 const ApiError = require('../utils/apiErrors')
 const asyncHandler = require('../utils/asyncHandler')
-const ApiResponse = require('../utils/apiResponse')
+const { ApiResponse } = require('../utils/apiResponse')
 const { uploadOnCloudinary } = require('../utils/cloudinary')
 
 
@@ -16,23 +16,23 @@ const registerUser = asyncHandler(async (req, res) => {
  // check for user creation
 
  const { username, email, fullName, password } = req.body
- console.log('email: ', email)
+ // console.log('email: ', email)
 
 
  if ([fullName, email, username, password].some((field) => field?.trim() === "")) {
   throw new ApiError(400, "All fields are required")
  }
 
- const existingUser = User.findOne({
+ const existingUser = await User.findOne({
   $or: [{ username }, { email }]
  })
 
  if (existingUser) {
   throw new ApiError(409, "user with email or username already exists")
  }
-
+// console.log('req.files', req.files)
  const avatarLocalPath = req.files?.avatar[0]?.path
- console.log('avatarLocalPath', avatarLocalPath)
+ // console.log('avatarLocalPath', avatarLocalPath)
  const coverImageLocalPath = req.files?.coverImage[0]?.path
 
  if (!avatarLocalPath) {
