@@ -27,11 +27,11 @@ router
 
 router
 .route('/avatar')
-.patch(verifyJWT, upload.single("/avatar"), updateUserAvatar)
+.patch(verifyJWT, upload.single("avatar"), updateUserAvatar)
 
 router
 .route('/cover-image')
-.patch(verifyJWT, upload.single("/coverImage"), updateUserCoverImg)
+.patch(verifyJWT, upload.single("coverImage"), updateUserCoverImg)
 
 router.route("/c/:username").get(verifyJWT, getUserChannelProfile)
 router.route("/history").get(verifyJWT, getWatchHistory)
